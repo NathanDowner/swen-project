@@ -167,14 +167,14 @@ public class AutomatedBankingMachine {
 		}
 		mainPanel.remove(window);
 		mainPanel.setVisible(false);
-		window = new ButtonScreen();
+		window = new MenuScreen();
 		menu();
 	}
 	
 	public static void menu() {
-		((ButtonScreen)window).setMessage("Welcome "+sysUser.getFullName(),0);
-		((ButtonScreen)window).setButtonLabels("","","","","Balance Query","Withdraw","Deposit","Cancel");
-		((ButtonScreen)window).setMessage("\n\n\n\n\n\n\t\tWhat would you like to do today?\n", 1);
+		//((ButtonScreen)window).setMessage("Welcome "+sysUser.getFullName(),0);
+		//((ButtonScreen)window).setButtonLabels("","","","","Balance Query","Withdraw","Deposit","Cancel");
+		//((ButtonScreen)window).setMessage("\n\n\n\n\n\n\t\tWhat would you like to do today?\n", 1);
 		mainPanel.add(window);
 		mainPanel.setVisible(true);
 		menuContinued();

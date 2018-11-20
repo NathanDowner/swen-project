@@ -15,11 +15,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JTextField;
+import java.awt.CardLayout;
+import javax.swing.border.BevelBorder;
 
 public class MenuScreen extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private JLabel lblMessage;
 	private JButton btnNewButton;
 	private JButton btnNewButton_1;
 	private JButton btnNewButton_2;
@@ -205,6 +206,7 @@ public class MenuScreen extends JPanel {
 		this.setBounds(100, 100, 1200, 800);
 		
 		sideNav = new JPanel();
+		sideNav.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		sideNav.setBounds(0, 0, 125, 817);
 		add(sideNav);
 		sideNav.setLayout(null);
@@ -224,15 +226,14 @@ public class MenuScreen extends JPanel {
 		mainPanel = new JPanel();
 		mainPanel.setBounds(124, 0, 1076, 801);
 		add(mainPanel);
-		mainPanel.setLayout(null);
+		mainPanel.setLayout(new CardLayout(0, 0));
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(82, 176, 886, 464);
-		mainPanel.add(panel_1);
+		mainPanel.add(panel_1, "name_524009145534674");
 		panel_1.setLayout(null);
 		
 		btnNewButton = new JButton();
-		btnNewButton.setBounds(70, 35, 140, 70);
+		btnNewButton.setBounds(102, 175, 140, 70);
 		btnNewButton.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				buttonChoice = 0;
@@ -250,7 +251,7 @@ public class MenuScreen extends JPanel {
 		panel_1.add(btnNewButton);
 		
 		btnNewButton_1 = new JButton();
-		btnNewButton_1.setBounds(70, 175, 140, 70);
+		btnNewButton_1.setBounds(464, 175, 140, 70);
 		btnNewButton_1.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				buttonChoice = 1;
@@ -268,7 +269,7 @@ public class MenuScreen extends JPanel {
 		panel_1.add(btnNewButton_1);
 		
 		btnNewButton_2 = new JButton();
-		btnNewButton_2.setBounds(70, 314, 140, 70);
+		btnNewButton_2.setBounds(792, 175, 140, 70);
 		btnNewButton_2.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				buttonChoice = 2;
@@ -286,7 +287,7 @@ public class MenuScreen extends JPanel {
 		panel_1.add(btnNewButton_2);
 		
 		btnNewButton_3 = new JButton();
-		btnNewButton_3.setBounds(385, 314, 140, 70);
+		btnNewButton_3.setBounds(102, 375, 140, 70);
 		btnNewButton_3.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				buttonChoice = 3;
@@ -304,30 +305,27 @@ public class MenuScreen extends JPanel {
 		panel_1.add(btnNewButton_3);
 		
 		btnNewButton_4 = new JButton();
-		btnNewButton_4.setBounds(385, 35, 140, 70);
+		btnNewButton_4.setBounds(464, 375, 140, 70);
 		panel_1.add(btnNewButton_4);
 		
 		btnNewButton_5 = new JButton();
-		btnNewButton_5.setBounds(385, 175, 140, 70);
+		btnNewButton_5.setBounds(792, 375, 140, 70);
 		panel_1.add(btnNewButton_5);
 		
 		btnNewButton_6 = new JButton();
-		btnNewButton_6.setBounds(693, 314, 140, 70);
+		btnNewButton_6.setBounds(102, 607, 140, 70);
 		panel_1.add(btnNewButton_6);
 		
 		btnNewButton_7 = new JButton();
-		btnNewButton_7.setBounds(693, 175, 140, 70);
+		btnNewButton_7.setBounds(464, 607, 140, 70);
 		panel_1.add(btnNewButton_7);
-		timeLabel.setBounds(970, 763, 134, 28);
-		mainPanel.add(timeLabel);
+		
+		btnNewButton_8 = new JButton();
+		btnNewButton_8.setBounds(792, 607, 140, 70);
+		panel_1.add(btnNewButton_8);
+		panel_1.add(timeLabel, "name_524009174728911");
 		
 		timeLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		
-		lblMessage = new JLabel();
-		lblMessage.setBounds(232, 74, 686, 44);
-		mainPanel.add(lblMessage);
-		lblMessage.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMessage.setFont(new Font("Sitka Small", Font.BOLD, 18));
 		btnNewButton_7.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				buttonChoice = 7;
