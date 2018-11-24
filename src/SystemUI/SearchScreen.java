@@ -13,40 +13,50 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
+
 import javax.swing.JTextField;
 import java.awt.CardLayout;
 import javax.swing.border.BevelBorder;
 import java.awt.Color;
 
-public class MenuScreen extends JPanel {
+public class SearchScreen extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private JButton btnNewButton;
-	private JButton btnNewButton_1;
-	private JButton btnNewButton_2;
-	private JButton btnNewButton_3;
-	private JButton btnNewButton_4;
-	private JButton btnNewButton_5;
-	private JButton btnNewButton_6;
-	private JButton btnNewButton_7;
-	private JButton btnNewButton_8;
 	private JLabel lblMessage = new JLabel("");
 	private JLabel messagePane = new JLabel("");
 	private JLabel timeLabel = new JLabel(DateUtil.today());
 	private int buttonChoice;
 	private String accNum;
 	private JPanel sideNav;
+	private JTextField txtEnterClientName;
+	private JTextField txtEnterClientId;
+	private JTextField txtEnterCaseId;
+	private JButton btnNewButton;
+	private JButton btnNewButton_1;
+	private JButton btnNewButton_2;
+	private JButton btnNewButton_3;
+	private String nameKey = "", clIdKey = "", caseIdKey  = "";
 
 	public void setTime() {
 		timeLabel.setText(DateUtil.today());
 	}
 	
-	public MenuScreen() {
+	public SearchScreen() {
 		initialize();
 	}
 
 	public int getButtonChoice() {
 		return buttonChoice;
+	}
+	
+	public ArrayList<String> getSearchKeys(){
+		ArrayList<String> keys = new ArrayList<String>();
+		keys.add(nameKey);
+		keys.add(clIdKey);
+		keys.add(caseIdKey);
+		return keys;
+		
 	}
 	
 	public void setButtonEnabled(boolean enable, int btnNum) {
@@ -63,25 +73,11 @@ public class MenuScreen extends JPanel {
 		case 3:
 			btnNewButton_3.setEnabled(enable);
 			break;
-		case 4:
-			btnNewButton_4.setEnabled(enable);
-			break;
-		case 5:
-			btnNewButton_5.setEnabled(enable);
-			break;
-		case 6:
-			btnNewButton_6.setEnabled(enable);
-			break;
-		case 7:
-			btnNewButton_7.setEnabled(enable);
-			break;
-		case 8:
-			btnNewButton_8.setEnabled(enable);
 		}
 	}
 	
 	public void setEndabledAll(boolean enabled) {
-		for(int i=0; i<9; i++) {
+		for(int i=0; i<4; i++) {
 			setButtonEnabled(enabled, i);
 		}
 	}
@@ -115,21 +111,6 @@ public class MenuScreen extends JPanel {
 		if(keyChar == 'a' || keyChar == 'A') {
 			return 3;
 		}
-		if(keyChar == 's' || keyChar == 'S') {
-			return 4;
-		}
-		if(keyChar == 'd' || keyChar == 'D') {
-			return 5;
-		}
-		if(keyChar == 'z' || keyChar == 'Z') {
-			return 6;
-		}
-		if(keyChar == 'x' || keyChar == 'X') {
-			return 7;
-		}
-		if(keyChar == 'c' || keyChar == 'C') {
-			return 8;
-		}
 		return -1;
 	}
 	
@@ -149,9 +130,6 @@ public class MenuScreen extends JPanel {
 		case 1:
 			messagePane.setText(text);
 			break;
-		case 2:
-			//txtEnterAmount.setText(text);
-			break;
 		}
 	}
 	
@@ -169,35 +147,15 @@ public class MenuScreen extends JPanel {
 		case 3:
 			btnNewButton_3.setText(text);
 			break;
-		case 4:
-			btnNewButton_4.setText(text);
-			break;
-		case 5:
-			btnNewButton_5.setText(text);
-			break;
-		case 6:
-			btnNewButton_6.setText(text);
-			break;
-		case 7:
-			btnNewButton_7.setText(text);
-			break;
-		case 8:
-			btnNewButton_8.setText(text);
-			break;
 		}
 	}
 	
-	public void setButtonLabels(String btn, String btn_1, String btn_2, String btn_3, String btn_4, String btn_5, String btn_6, String btn_7, String btn_8) {
+	public void setButtonLabels(String btn, String btn_1, String btn_2, String btn_3) {
 		int i=0;
 		setButtonLabel(btn,i++);
 		setButtonLabel(btn_1,i++);
 		setButtonLabel(btn_2,i++);
 		setButtonLabel(btn_3,i++);
-		setButtonLabel(btn_4,i++);
-		setButtonLabel(btn_5,i++);
-		setButtonLabel(btn_6,i++);
-		setButtonLabel(btn_7,i++);
-		setButtonLabel(btn_8,i++);
 	}
 	
 	private void initialize() {
@@ -243,17 +201,52 @@ public class MenuScreen extends JPanel {
 		messagePane.setBounds(242, 104, 550, 60);
 		panel_1.add(messagePane);
 		
+		JLabel lblSearchForClient = new JLabel("Search for Client:");
+		lblSearchForClient.setFont(new Font("Segoe Print", Font.PLAIN, 26));
+		lblSearchForClient.setBounds(72, 175, 256, 74);
+		panel_1.add(lblSearchForClient);
+		
+		JLabel lblSearchForCase = new JLabel("Search for Case:");
+		lblSearchForCase.setFont(new Font("Segoe Print", Font.PLAIN, 26));
+		lblSearchForCase.setBounds(662, 175, 256, 74);
+		panel_1.add(lblSearchForCase);
+		
+		txtEnterClientName = new JTextField();
+		txtEnterClientName.setFont(new Font("Tahoma", Font.PLAIN, 19));
+		txtEnterClientName.setText("Enter Client Name");
+		txtEnterClientName.setBounds(32, 336, 199, 41);
+		panel_1.add(txtEnterClientName);
+		txtEnterClientName.setColumns(10);
+		
+		txtEnterClientId = new JTextField();
+		txtEnterClientId.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		txtEnterClientId.setText("Enter Client ID No.");
+		txtEnterClientId.setColumns(10);
+		txtEnterClientId.setBounds(32, 530, 199, 41);
+		panel_1.add(txtEnterClientId);
+		
+		txtEnterCaseId = new JTextField();
+		txtEnterCaseId.setText("Enter Case ID No.");
+		txtEnterCaseId.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		txtEnterCaseId.setColumns(10);
+		txtEnterCaseId.setBounds(523, 423, 199, 41);
+		panel_1.add(txtEnterCaseId);
+		
 		btnNewButton = new JButton();
-		btnNewButton.setBounds(102, 175, 140, 70);
+		btnNewButton.setBounds(300, 323, 140, 70);
 		panel_1.add(btnNewButton);
 		btnNewButton.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				buttonChoice = 0;
+				nameKey = txtEnterClientName.getText();
+				clIdKey = txtEnterClientId.getText();
 			}
 		});
 		btnNewButton.addKeyListener( new KeyListener() {
 			public void keyTyped(KeyEvent key) {
 				buttonChoice = returnButtonChoice(key.getKeyChar());
+				nameKey = txtEnterClientName.getText();
+				clIdKey = txtEnterClientId.getText();
 			}
 			public void keyPressed(KeyEvent e) {
 			}
@@ -262,16 +255,18 @@ public class MenuScreen extends JPanel {
 		});
 		
 		btnNewButton_1 = new JButton();
-		btnNewButton_1.setBounds(464, 175, 140, 70);
+		btnNewButton_1.setBounds(804, 408, 140, 70);
 		panel_1.add(btnNewButton_1);
 		btnNewButton_1.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				buttonChoice = 1;
+				caseIdKey = txtEnterCaseId.getText();
 			}
 		});
 		btnNewButton_1.addKeyListener( new KeyListener() {
 			public void keyTyped(KeyEvent key) {
 				buttonChoice = returnButtonChoice(key.getKeyChar());
+				caseIdKey = txtEnterCaseId.getText();
 			}
 			public void keyPressed(KeyEvent e) {
 			}
@@ -279,8 +274,8 @@ public class MenuScreen extends JPanel {
 			}
 		});
 		
-		btnNewButton_2 = new JButton();
-		btnNewButton_2.setBounds(792, 175, 140, 70);
+		btnNewButton_2= new JButton();
+		btnNewButton_2.setBounds(300, 516, 140, 70);
 		panel_1.add(btnNewButton_2);
 		btnNewButton_2.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -289,7 +284,7 @@ public class MenuScreen extends JPanel {
 		});
 		btnNewButton_2.addKeyListener( new KeyListener() {
 			public void keyTyped(KeyEvent key) {
-					buttonChoice = returnButtonChoice(key.getKeyChar());
+				buttonChoice = returnButtonChoice(key.getKeyChar());
 			}
 			public void keyPressed(KeyEvent e) {
 			}
@@ -297,8 +292,8 @@ public class MenuScreen extends JPanel {
 			}
 		});
 		
-		btnNewButton_3 = new JButton();
-		btnNewButton_3.setBounds(102, 375, 140, 70);
+		btnNewButton_3= new JButton();
+		btnNewButton_3.setBounds(413, 625, 140, 70);
 		panel_1.add(btnNewButton_3);
 		btnNewButton_3.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -306,96 +301,6 @@ public class MenuScreen extends JPanel {
 			}
 		});
 		btnNewButton_3.addKeyListener( new KeyListener() {
-			public void keyTyped(KeyEvent key) {
-				buttonChoice = returnButtonChoice(key.getKeyChar());
-			}
-			public void keyPressed(KeyEvent e) {
-			}
-			public void keyReleased(KeyEvent e) {
-			}
-		});
-		
-		btnNewButton_4 = new JButton();
-		btnNewButton_4.setBounds(464, 375, 140, 70);
-		panel_1.add(btnNewButton_4);
-		btnNewButton_4.addActionListener( new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				buttonChoice = 4;
-			}
-		});
-		btnNewButton_4.addKeyListener( new KeyListener() {
-			public void keyTyped(KeyEvent key) {
-				buttonChoice =returnButtonChoice(key.getKeyChar());
-			}
-			public void keyPressed(KeyEvent e) {
-			}
-			public void keyReleased(KeyEvent e) {
-			}
-		});	
-		
-		btnNewButton_5 = new JButton();
-		btnNewButton_5.setBounds(792, 375, 140, 70);
-		panel_1.add(btnNewButton_5);
-		btnNewButton_5.addActionListener( new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				buttonChoice = 5;
-			}
-		});
-		btnNewButton_5.addKeyListener( new KeyListener() {
-			public void keyTyped(KeyEvent key) {
-				buttonChoice = returnButtonChoice(key.getKeyChar());
-			}
-			public void keyPressed(KeyEvent e) {
-			}
-			public void keyReleased(KeyEvent e) {
-			}
-		});
-		
-		btnNewButton_6 = new JButton();
-		btnNewButton_6.setBounds(102, 607, 140, 70);
-		panel_1.add(btnNewButton_6);
-		btnNewButton_6.addActionListener( new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				buttonChoice = 6;
-			}
-		});
-		btnNewButton_6.addKeyListener( new KeyListener() {
-			public void keyTyped(KeyEvent key) {
-				buttonChoice = returnButtonChoice(key.getKeyChar());
-			}
-			public void keyPressed(KeyEvent e) {
-			}
-			public void keyReleased(KeyEvent e) {
-			}
-		});
-		
-		btnNewButton_7 = new JButton();
-		btnNewButton_7.setBounds(464, 607, 140, 70);
-		panel_1.add(btnNewButton_7);
-		btnNewButton_7.addActionListener( new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				buttonChoice = 7;
-			}
-		});
-		btnNewButton_7.addKeyListener( new KeyListener() {
-			public void keyTyped(KeyEvent key) {
-				buttonChoice = returnButtonChoice(key.getKeyChar());
-			}
-			public void keyPressed(KeyEvent e) {
-			}
-			public void keyReleased(KeyEvent e) {
-			}
-		});
-		
-		btnNewButton_8 = new JButton();
-		btnNewButton_8.setBounds(792, 607, 140, 70);
-		panel_1.add(btnNewButton_8);
-		btnNewButton_8.addActionListener( new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				buttonChoice = 8;
-			}
-		});
-		btnNewButton_8.addKeyListener( new KeyListener() {
 			public void keyTyped(KeyEvent key) {
 				buttonChoice = returnButtonChoice(key.getKeyChar());
 			}

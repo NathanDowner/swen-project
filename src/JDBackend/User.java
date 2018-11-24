@@ -31,6 +31,10 @@ public class User implements Comparable{
     	return this.fName + " " + this.lName;
     }
     
+    public String getFName() {
+    	return this.fName;
+    }
+    
     @Override
     public int compareTo(Object o){
         if(username.equals(((User)o).getUsername()) && password.equals(((User)o).getPassword())){

@@ -19,7 +19,6 @@ import javax.swing.border.BevelBorder;
 
 public class LogInScreen extends JPanel{
 
-
 	private static final long serialVersionUID = 1L;
 	private JLabel lblMessage;
 	private JPasswordField passwordField;

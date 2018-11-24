@@ -1,5 +1,6 @@
 import ABMBackend.*;
 import JDBackend.*;
+import JDBackend.Client;
 import SystemUI.*;
 import guiPkg.*;
 
@@ -59,7 +60,7 @@ public class AutomatedBankingMachine {
 	
 	public static ArrayList<Account> getAllAccounts() {
 		ArrayList<Account> allAccounts = new ArrayList<Account>();
-    	for (Client cl : personalClientData) {
+    	for (Client cl : client ) {
     		for(Account acc: cl.getAccounts()) {
     			allAccounts.add(acc);
     		}
@@ -89,6 +90,43 @@ public class AutomatedBankingMachine {
 		return text;
 	}
 	
+	public static void search() {
+		ArrayList<String> searchKeys = new ArrayList<String>();
+		mainPanel.remove(window);
+		mainPanel.setVisible(false);
+		window = new SearchScreen();
+		((SearchScreen)window).setMessage("Welcome to the Search Screen", 0);
+		((SearchScreen)window).setMessage("How would you like to search "+ sysUser.getFName()+"?", 1);
+		((SearchScreen)window).setButtonLabels("Enter","Enter","Enter","Cancel");
+		mainPanel.add(window);
+		mainPanel.setVisible(true);
+		((SearchScreen)window).defaultButton().requestFocusInWindow();
+		int buttonChoice; 
+		do {
+			buttonChoice = ((SearchScreen)window).getButtonChoice();
+			System.out.println(buttonChoice);
+		}while(buttonChoice < 0);
+		if (buttonChoice<3) {
+			searchKeys = ((SearchScreen)window).getSearchKeys();
+			while (searchKeys.get(buttonChoice).compareTo("") == 0) {
+				((SearchScreen)window).setMessage("Try again "+ sysUser.getFName(), 1);
+				((SearchScreen)window).setButtonChoice('t');
+				searchKeys = ((SearchScreen)window).getSearchKeys();
+			}
+		}
+		switch (buttonChoice){
+			case 0:
+				break;
+			case 1:
+				break;
+			case 2:
+				break;
+			case 3:
+				menu();
+				break;
+		}
+	}
+	
 	private static void admin() {
 		mainPanel.remove(window);
 		mainPanel.setVisible(false);
@@ -115,26 +153,6 @@ public class AutomatedBankingMachine {
 			mainFrame.dispatchEvent(new WindowEvent(mainFrame, WindowEvent.WINDOW_CLOSING));
 			break;
 		}
-	}
-
-	public static void main(String[] args) {
-		if (!file.loadData()) {
-			initialize();
-			createObjects();
-		}
-		else {
-			personalClientData = file.getPersonalClients();
-			businessClientData = file.getBusinessClients();
-			cardList = file.getABMCards();
-			t.setLog(file.getTransactionLog());
-		}
-		
-		mainFrame.setBounds(100, 100, 1200, 800);
-		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mainPanel = mainFrame.getContentPane();
-		
-		userList.add(new User("kilidon","hothead7", "Akili", "Sterling"));
-		startup();
 	}
 	
 	public static void startup() {
@@ -165,46 +183,52 @@ public class AutomatedBankingMachine {
 			}
 			sysUser = searchUserList(startUser);
 		}
-		mainPanel.remove(window);
-		mainPanel.setVisible(false);
-		window = new MenuScreen();
 		menu();
 	}
 	
 	public static void menu() {
-		//((ButtonScreen)window).setMessage("Welcome "+sysUser.getFullName(),0);
-		//((ButtonScreen)window).setButtonLabels("","","","","Balance Query","Withdraw","Deposit","Cancel");
-		//((ButtonScreen)window).setMessage("\n\n\n\n\n\n\t\tWhat would you like to do today?\n", 1);
+		mainPanel.remove(window);
+		mainPanel.setVisible(false);
+		window = new MenuScreen();
+		((MenuScreen)window).setMessage("Welcome "+sysUser.getFullName(),0);
+		((MenuScreen)window).setButtonLabels("Search","Add Client","Edit CLient","Generate Statement","Send Email","Add Case","Update Case","Coming Soon","Logout");
+		((MenuScreen)window).setMessage("\n\n\n\n\n\n\t\tWhat would you like to do today?\n", 1);
 		mainPanel.add(window);
 		mainPanel.setVisible(true);
 		menuContinued();
 	}
 	
 	public static void menuContinued() {
-		((ButtonScreen)window).defaultButton().requestFocusInWindow();
+		((MenuScreen)window).defaultButton().requestFocusInWindow();
 		int buttonChoice;
-		((ButtonScreen)window).setButtonChoice('t');
+		((MenuScreen)window).setButtonChoice('t');
 		do {
-			((ButtonScreen)window).setTime();
-			buttonChoice = ((ButtonScreen)window).getButtonChoice();
-		} while (buttonChoice < 4);
-		if (buttonChoice == 7) {
-			((ButtonScreen)window).setMessage("\n\n\n\n\n\n\t\t   Thank you for using the ABM", 1);
-			((ButtonScreen)window).setButtonLabels("","","","","","","","Done");
-			((ButtonScreen)window).setButtonChoice('t');
+			((MenuScreen)window).setTime();
+			buttonChoice = ((MenuScreen)window).getButtonChoice();
+		} while (buttonChoice < 0);
+		if (buttonChoice == 8) {
+			((MenuScreen)window).setMessage("\n\n\n\n\n\n\t\t   Thank you for using the system", 1);
+			((MenuScreen)window).setButtonLabels("","","","","","","","Sign In","Exit");
+			((MenuScreen)window).setButtonChoice('t');
 			do {
-				((ButtonScreen)window).setTime();
-				buttonChoice = ((ButtonScreen)window).getButtonChoice();
-			} while (buttonChoice != 7);
-			mainPanel.remove(window);
-			userStatus = 0;
-			startup();
+				((MenuScreen)window).setTime();
+				buttonChoice = ((MenuScreen)window).getButtonChoice();
+			} while (buttonChoice != 8 && buttonChoice != 7);
+			if (buttonChoice == 8) {
+				mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				mainFrame.dispatchEvent(new WindowEvent(mainFrame, WindowEvent.WINDOW_CLOSING));
+			}
+			else {
+				mainPanel.remove(window);
+				userStatus = 0;
+				startup();
+			}
 		}
 		else {
-			((ButtonScreen)window).setButtonChoice('t');
+			((MenuScreen)window).setButtonChoice('t');
 			switch (buttonChoice) {
-			case 4:
-				balanceQueryMenu();
+			case 0:
+				search();
 				break;
 			case 5:
 				withdrawMenu();
